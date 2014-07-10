@@ -9,7 +9,7 @@
 
 @interface HSNSStringInputStream ()
 
-@property uint16_t bytesAvailable;
+@property uint32_t bytesAvailable;
 
 @end
 
@@ -108,11 +108,15 @@
 
 - (NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len {
 	
+    if(bytesAvailable == 0 ){
+        return 0;
+    }
+    
     if(bytesAvailable > len){
         bytesAvailable-=len;
     }else{
+        len=bytesAvailable;
         bytesAvailable=0;
-        len-=bytesAvailable;
     }
     
     NSRange stringRange = NSMakeRange([self.string length]-bytesAvailable, len);

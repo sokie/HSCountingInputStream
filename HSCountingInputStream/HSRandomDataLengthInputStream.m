@@ -9,7 +9,7 @@
 
 @interface HSRandomDataLengthInputStream ()
 
-@property uint16_t bytesAvailable;
+@property uint32_t bytesAvailable;
 
 @end
 
@@ -39,13 +39,12 @@
     return self;
 }
 
-- (id)initWithLength:(uint16_t)length
+- (id)initWithLength:(uint32_t)length
 {
     self = [super init];
     if (self) {
         // Initialization code here.
         streamStatus = NSStreamStatusNotOpen;
-        self.length = length;
         self.bytesAvailable = length;
         [self setDelegate:self];
     }
@@ -108,11 +107,15 @@
 
 - (NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len {
 	
+    if(bytesAvailable == 0){
+        return 0;
+    }
+    
     if(bytesAvailable > len){
         bytesAvailable-=len;
     }else{
+        len = bytesAvailable;
         bytesAvailable=0;
-        len-=bytesAvailable;
     }
     
 	for (NSUInteger i=0; i<len; ++i) {

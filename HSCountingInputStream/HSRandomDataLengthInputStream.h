@@ -9,8 +9,6 @@
 
 @interface HSRandomDataLengthInputStream : NSInputStream <NSStreamDelegate>
 
-    @property (assign) uint16_t length;
-
-- (id)initWithLength:(uint16_t)length;
+- (id)initWithLength:(uint32_t)length;
 
 @end
