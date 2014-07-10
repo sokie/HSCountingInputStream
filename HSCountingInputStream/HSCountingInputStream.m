@@ -19,7 +19,6 @@
 	CFStreamClientContext copiedContext;
 	CFOptionFlags requestedEvents;
 }
-@synthesize characterToCount;
 @synthesize countedCharacters = characterCounter;
 
 
@@ -97,11 +96,7 @@
 - (NSInteger)read:(uint8_t *)buffer maxLength:(NSUInteger)len {
 	NSInteger bytesRead = [parentStream read:buffer maxLength:len];
 	
-	for (int i=0; i<bytesRead; ++i) {
-		if (buffer[i] == characterToCount) {
-			++characterCounter;
-		}
-	}
+	characterCounter += bytesRead;
 	
 	return bytesRead;
 }

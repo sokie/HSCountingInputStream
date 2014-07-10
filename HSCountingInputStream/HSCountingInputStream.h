@@ -11,7 +11,6 @@
 
 @interface HSCountingInputStream : NSInputStream <NSStreamDelegate>
 
-@property (assign) char characterToCount;
 @property (readonly, assign) NSUInteger countedCharacters;
 
 - (id)initWithInputStream:(NSInputStream *)stream;
